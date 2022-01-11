@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ComponentsTesting from "./components/ComponentsTesting";
+import Editor from "./editor/Editor";
+import OfflineComponents from "./offline/OfflineComponents";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="leading-tight h-screen w-screen flex overflow-y-hidden overflow-x-auto dark">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route index element={<OfflineComponents />} />
+            <Route path="debug">
+              <Route path="components" element={<ComponentsTesting />} />
+            </Route>
+            <Route path="editor">
+              <Route index element={<Editor />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
