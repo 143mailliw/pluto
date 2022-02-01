@@ -1,14 +1,20 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import IViewComponentAdditive from "./IViewComponentAdditive";
+import IViewComponentMetadata from "./IViewComponentMetadata";
 
 /* eslint-disable semi */
 export default interface IViewComponent {
-  /** The name of the component. */
-  name: string
-  /** The additives supported by the component. */
+  /* The component's UUID. */
+  id: string
+  /* The component's metadata. */
+  metadata: IViewComponentMetadata
+  /* The component's React component. */
+  component: (component: IViewComponent) => JSX.Element
+  /* The component's accepted values. */
+  values: Record<string, any>
+  /* The component's children. */
+  children: IViewComponent[]
+  /* The component's current additives. */
   additives: IViewComponentAdditive[]
-  /** The description of the component. */
-  description: string
-  /** The component's icon. */
-  icon: IconProp
+  /* The component's tags. */
+  tags?: string[]
 }
