@@ -1,11 +1,14 @@
 import { faBorderNone } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
 import { v4 } from "uuid";
-import DropZone from "../../../editor/DropZone";
+import ContextMenu from "../../../components/controls/ContextMenu";
+import MenuItem from "../../../components/menu/MenuItem";
 import TreeContext from "../../../TreeContext";
 import IViewComponent from "../../../types/IViewComponent";
 import IViewComponentAdditive from "../../../types/IViewComponentAdditive";
 import IViewComponentMetadata from "../../../types/IViewComponentMetadata";
+import IViewComponentProps from "../../../types/IViewComponentProps";
+import ComponentChildren from "../../ComponentChildren";
+import ComponentClickHandler from "../../ComponentClickHandler";
 
 const BasicVC: IViewComponentMetadata = {
   name: "Basic",
@@ -20,44 +23,19 @@ class BasicVCInstance implements IViewComponent {
   public metadata = BasicVC;
   public additives: IViewComponentAdditive[] = [];
   public children: IViewComponent[] = [];
-  public values: Record<string, any> = [];
+  public values = {};
 
-  public component(component: IViewComponent): JSX.Element {
+  public component(props: IViewComponentProps): JSX.Element {
     return (
-      <div className="p-4 bg-red-200 border-2 border-red-600 flex flex-col flex-shrink-0 flex-grow-0 h-max">
-        <TreeContext.Consumer>
-          {(context) => (<>
-            {component.children.map((value, index) => (<>
-              <DropZone 
-                onDropComponent={(newComponent: IViewComponentMetadata) => {
-                  if(newComponent.componentConstructor) {
-                    // i don't understand why this is necessary
-                    // eslint-disable-next-line
-                    component.children.splice(index, 0, newComponent.componentConstructor());
-                    console.log(component.children);
-                    context.incrementCounter();
-                  }
-                }}
-              />
-
-              {React.createElement(value.component, value)}
-            </>))}
-
-            <DropZone 
-              fullSize={component.children.length === 0}
-              onDropComponent={(newComponent: IViewComponentMetadata) => {
-                if(newComponent.componentConstructor) {
-                  // i don't understand why this is necessary
-                  // eslint-disable-next-line
-                  component.children.push(newComponent.componentConstructor());
-                  console.log(component.children);
-                  context.incrementCounter();
-                }
-              }}
-            />
-          </>)}
-        </TreeContext.Consumer>
-      </div>
+      <ComponentClickHandler component={props.component} parent={props.parent}>
+        <div className="p-4 bg-red-200 border-2 border-red-600 flex flex-col flex-shrink-0 flex-grow-0 h-max">
+          <ComponentChildren
+            parent={props.parent}
+            component={props.component}
+            allowDrop
+          />
+        </div>
+      </ComponentClickHandler>
     );
   }
 

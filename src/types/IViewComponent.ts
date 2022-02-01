@@ -1,5 +1,7 @@
+import { CSSProperties } from "react";
 import IViewComponentAdditive from "./IViewComponentAdditive";
 import IViewComponentMetadata from "./IViewComponentMetadata";
+import IViewComponentProps from "./IViewComponentProps";
 
 /* eslint-disable semi */
 export default interface IViewComponent {
@@ -8,9 +10,14 @@ export default interface IViewComponent {
   /* The component's metadata. */
   metadata: IViewComponentMetadata
   /* The component's React component. */
-  component: (component: IViewComponent) => JSX.Element
+  component: (props: IViewComponentProps) => JSX.Element
   /* The component's accepted values. */
-  values: Record<string, any>
+  values: {
+    /* The commponent's style. */
+    style?: CSSProperties
+    /* If the compoent contains text, this is the text. */
+    content?: string
+  }
   /* The component's children. */
   children: IViewComponent[]
   /* The component's current additives. */

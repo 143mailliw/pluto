@@ -501,7 +501,6 @@ function ComponentsTesting(): JSX.Element {
                       Example
                     </MenuItem>
                   </>}
-                  fullWidth
                 >
                   <div className="w-full text-center bg-blue-500 text-white rounded text-2xl font-bold py-10">
                     Right click me!

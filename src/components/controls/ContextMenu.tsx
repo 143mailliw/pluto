@@ -6,7 +6,7 @@ import { usePopper } from "react-popper";
 
 interface IContextMenuProps extends React.HTMLProps<HTMLDivElement> {
   menu: JSX.Element;
-  fullWidth?: boolean;
+  inactive?: boolean;
 }
 
 let x = 0;
@@ -81,12 +81,15 @@ function ContextMenu(props: IContextMenuProps): JSX.Element {
   return (
     <>
       <div
-        className={`${props.fullWidth ? "w-full" : "w-max"}`}
+        className={`contents`}
         onContextMenu={(e) => {
-          e.preventDefault();
-          setIsOpen(true);
-          x = e.clientX;
-          y = e.clientY;
+          if(!props.inactive) {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsOpen(true);
+            x = e.clientX;
+            y = e.clientY;
+          }
         }}
       >  
         {props.children}

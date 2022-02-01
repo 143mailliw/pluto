@@ -20,7 +20,7 @@ function Editor(): JSX.Element {
       icon: faVectorSquare
     },
     children: [],
-    values: [],
+    values: {},
     additives: [],
     component: () => <Callout>layout error: root component was rendered</Callout>,
     tags: ["root", "readonly", "unrenderable", "unselectable"]

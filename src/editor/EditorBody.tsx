@@ -29,7 +29,7 @@ function EditorBody(props: IEditorBodyProps): JSX.Element {
                     }
                   }}
                 />
-                {React.createElement(value.component, value)}
+                {React.createElement(value.component, {component: value, parent: props.rootComponent})}
               </>);
             })}
 
